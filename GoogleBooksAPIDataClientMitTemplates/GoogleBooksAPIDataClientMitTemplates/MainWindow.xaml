@@ -25,7 +25,15 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Title" Binding="{Binding title}"/>
                     <DataGridTextColumn Header="Datummm" Binding="{Binding publishedDate}"/>
-
+                    <DataGridTemplateColumn CellTemplate="{StaticResource BookTemplate}"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Calendar DisplayDate="{Binding publishedDate}"
+                                          SelectedDate="{Binding publishedDate}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <GridSplitter Grid.Column="1" Background="Gray"  HorizontalAlignment="Stretch"/>
@@ -40,13 +48,25 @@
                     <Label>Veröffentlichungsdatum</Label>
                     <DatePicker Text="{Binding ElementName=myGrid,Path=SelectedItem.publishedDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
+
+                <ContentPresenter DockPanel.Dock="Bottom" 
+                                  ContentTemplate="{StaticResource BookTemplate}" 
+                                  Content="{Binding ElementName=myGrid,Path=SelectedItem}"/>
+
                 <GroupBox Header="Beschreibung">
                     <ScrollViewer>
                         <TextBlock TextWrapping="Wrap" Text="{Binding ElementName=myGrid,Path=SelectedItem.description}" />
                     </ScrollViewer>
                 </GroupBox>
+
+
             </DockPanel>
+            <!--<ListBox Grid.Column="3" Name="lb" DisplayMemberPath="title" 
+                 SelectedItem="{Binding ElementName=myGrid,Path=SelectedItem}"/>-->
+            <ListBox Grid.Column="3" Name="lb" HorizontalContentAlignment="Stretch" 
+                 ItemTemplate="{StaticResource BookTemplate}"
+                 SelectedItem="{Binding ElementName=myGrid,Path=SelectedItem}"/>
+
         </Grid>
-        <ListBox Grid.Column="3" Name="lb" DisplayMemberPath="title" SelectedItem="{Binding ElementName=myGrid,Path=SelectedItem}"/>
     </DockPanel>
 </Window>

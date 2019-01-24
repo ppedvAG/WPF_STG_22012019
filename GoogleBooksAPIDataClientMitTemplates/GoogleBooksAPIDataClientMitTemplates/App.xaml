@@ -4,6 +4,25 @@
              xmlns:local="clr-namespace:GoogleBooksAPIDataClientMitTemplates"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <DataTemplate x:Key="BookTemplate" DataType="{x:Type local:Volumeinfo}">
+            <Border CornerRadius="8" BorderBrush="DarkSeaGreen" BorderThickness="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Ellipse Width="32" Height="32" Fill="Fuchsia" Grid.RowSpan="3"/>
+                    <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding title}" FontWeight="Bold" FontSize="20"/>
+                    <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Text="{Binding authors[0]}" />
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding publishedDate}" />
+                </Grid>
+            </Border>
+        </DataTemplate>
+
     </Application.Resources>
 </Application>
