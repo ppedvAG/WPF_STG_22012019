@@ -8,29 +8,45 @@
         Title="MainWindow" Height="450" Width="600">
     <DockPanel>
         <WrapPanel Margin="8" DockPanel.Dock="Top">
-            <Button Click="LoadBooks">Laden</Button>
+            <Button Click="LoadBooks">JSON Laden</Button>
+            <Button Click="AddBook">Add new book</Button>
+            <Button Click="RemoveBook">Remove Selected</Button>
+
         </WrapPanel>
         <Grid >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="2"/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
+
             </Grid.ColumnDefinitions>
-            <DataGrid  Name="myGrid"/>
+            <DataGrid IsReadOnly="True"  Name="myGrid" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Title" Binding="{Binding title}"/>
+                    <DataGridTextColumn Header="Datummm" Binding="{Binding publishedDate}"/>
+
+                </DataGrid.Columns>
+            </DataGrid>
             <GridSplitter Grid.Column="1" Background="Gray"  HorizontalAlignment="Stretch"/>
-            <StackPanel Grid.Column="2" Margin="8">
-                <Label>Titel</Label>
-                <TextBox/>
-                <Label>Autoren</Label>
-                <TextBox/>
-                <Label>ISBN</Label>
-                <TextBox/>
-                <Label>Veröffentlichungsdatum</Label>
-                <DatePicker/>
+            <DockPanel Grid.Column="2" Margin="8">
+                <StackPanel DockPanel.Dock="Top">
+                    <Label>Titel</Label>
+                    <TextBox Text="{Binding ElementName=myGrid,Path=SelectedItem.title}"/>
+                    <Label>Autoren</Label>
+                    <TextBox Text="{Binding ElementName=myGrid,Path=SelectedItem.authors[0]}"/>
+                    <Label>ISBN</Label>
+                    <TextBox Text="{Binding ElementName=myGrid,Path=SelectedItem.industryIdentifiers[0].identifier}"/>
+                    <Label>Veröffentlichungsdatum</Label>
+                    <DatePicker Text="{Binding ElementName=myGrid,Path=SelectedItem.publishedDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
                 <GroupBox Header="Beschreibung">
-                    <TextBlock TextWrapping="Wrap" Name="tb" />
+                    <ScrollViewer>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding ElementName=myGrid,Path=SelectedItem.description}" />
+                    </ScrollViewer>
                 </GroupBox>
-            </StackPanel>
+            </DockPanel>
         </Grid>
+        <ListBox Grid.Column="3" Name="lb" DisplayMemberPath="title" SelectedItem="{Binding ElementName=myGrid,Path=SelectedItem}"/>
     </DockPanel>
 </Window>
