@@ -1,0 +1,35 @@
+﻿<Window x:Class="HalloBinding.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cc="clr-namespace:System.Media;assembly=System"
+        xmlns:local="clr-namespace:HalloBinding"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="400">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVis"/>
+        <local:BoolToColorConverter x:Key="boolToCol"/>
+    </Window.Resources>
+    <StackPanel Margin="8">
+        <TextBox Name="tb1"/>
+        <TextBox Text="{Binding ElementName=tb1,Path=Text,UpdateSourceTrigger=PropertyChanged}"
+                 Background="{Binding ElementName=tb1,Path=Text,UpdateSourceTrigger=PropertyChanged}"/>
+        <Slider Visibility="Visible" x:Name="sl1" IsSnapToTickEnabled="True" TickFrequency="5.27" Maximum="100"/>
+        <TextBlock Text="{Binding ElementName=sl1,Path=Value,StringFormat=0.00}" 
+                   FontSize="{Binding ElementName=sl1,Path=Value}"/>
+
+        <CheckBox  Name="cb1">Visible</CheckBox>
+        <Label Visibility="{Binding ElementName=cb1,Path=IsChecked,Converter={StaticResource boolToVis}}">WICHTIGER TEXT!!!</Label>
+        <Ellipse Width="40" Height="40"
+                 Fill="{Binding ElementName=cb1,Path=IsChecked,Converter={StaticResource boolToCol},ConverterParameter='blue'}"
+                 StrokeThickness="2"
+                 Stroke="Black"
+                 HorizontalAlignment="Left"/>
+        <Ellipse Width="40" Height="40"
+                 Fill="{Binding ElementName=cb1,Path=IsChecked,Converter={StaticResource boolToCol}}"
+                 StrokeThickness="2"
+                 Stroke="Black"
+                 HorizontalAlignment="Left"/>
+    </StackPanel>
+</Window>
