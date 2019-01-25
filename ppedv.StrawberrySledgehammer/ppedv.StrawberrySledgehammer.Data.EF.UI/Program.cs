@@ -66,7 +66,7 @@ namespace ppedv.StrawberrySledgehammer.Data.EF.UI
             using (var con = new EfContext())
             {
                 var dt = DateTime.Now;
-                var query = con.Instrumente.Where(x => x.Orchester.Any(y => y.Veranstanlungen.Any(z => z.Datum > dt)));
+                var query = con.Instrumente.Where(x => x.Orchester.Any(y => y.Veranstaltungen.Any(z => z.Datum > dt)));
                 query.ToList();
                 foreach (var i in con.Instrumente.Where(x => x.Stimmung.Length < 100).OrderBy(x => x.Stimmung))
                 {
