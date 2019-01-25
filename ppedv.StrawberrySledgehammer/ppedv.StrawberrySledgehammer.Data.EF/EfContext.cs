@@ -22,5 +22,10 @@ namespace ppedv.StrawberrySledgehammer.Data.EF
                         .HasMaxLength(67)
                         .IsRequired();
         }
+
+        public EfContext() : base("Server=.;Database=StrawSlege;Trusted_Connection=true;")
+        {
+
+        }
     }
 }

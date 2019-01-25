@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="ppedv.StrawberrySledgehammer.UI.WPF.Views.InstrumentenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ppedv.StrawberrySledgehammer.UI.WPF.Views"
+             xmlns:vm="clr-namespace:ppedv.StrawberrySledgehammer.UI.WPF.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:InstrumentenViewModel/>
+    </UserControl.DataContext>
+    <DockPanel>
+        <WrapPanel Margin="8" DockPanel.Dock="Top">
+            <Button>Laden</Button>
+            <Button Command="{Binding SaveCommandInCool}">Speichern</Button>
+            <Button Command="{Binding NewCommand}">Neu</Button>
+            <Button Command="{Binding DelteCommand}">Löschen</Button>
+        </WrapPanel>
+        <DataGrid SelectionMode="Single" ItemsSource="{Binding Instrumente}" AutoGenerateColumns="False" 
+                  SelectedItem="{Binding SelectedInstrument,NotifyOnSourceUpdated=True,UpdateSourceTrigger=PropertyChanged}"
+                  DockPanel.Dock="Left" Width="200">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top" Margin="20">
+                <Label>
+                    <TextBlock Text="{Binding Namestextlänge,StringFormat='Name [{0:000}]'}"/>
+                </Label>
+                <TextBox Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
+                <Label>Material</Label>
+                <ComboBox ItemsSource="{Binding Materialien}"
+                          SelectedItem="{Binding SelectedInstrument.Material}"/>
+                <Label>Stimmung</Label>
+                <TextBox Text="{Binding SelectedInstrument.Stimmung}"/>
+                <CheckBox IsChecked="{Binding SelectedInstrument.IstChromatisch}">Chromatisch</CheckBox>
+            </StackPanel>
+            <GroupBox Header="Orchester">
+                <ListBox/>
+            </GroupBox>
+        </DockPanel>
+    </DockPanel>
+</UserControl>
